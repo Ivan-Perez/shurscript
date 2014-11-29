@@ -28,17 +28,18 @@
 		var $nick = $('td.alt2 div a');
 		var myName = null;
 
-		_.each($nick, function(nick){
+		$nick.each(function(nick) {
+			nick = $(nick);
 			// Me guardo mi nick para siempre
 			// Esto se podría globalizar si lo queréis
-			if(!myName) {
-				myName = $(nick).text();
+			if (!myName) {
+				myName = nick.text();
 			}
 
 			// Me aseguro que aparece mi nick
-			if($(nick).text().indexOf(myName) > -1) {
+			if (nick.text().indexOf(myName) > -1) {
 				// Borro enlace y texto manteniendo el diseño
-				$(nick).attr('href', '#').text('*');
+				nick.attr('href', '#').text('*');
 			}
 		});
 
@@ -53,12 +54,11 @@
 		var $imgs = $('#posts img, #posts iframe, #posts embed');
 
 		//Me aseguro que es un link de member
-		_.each($imgs, function(img){
-
-			var $img = $(img);
+		for (var i = 0; i < $imgs.length; i++) {
+			var $img = $($imgs[i]);
 
 			// Si no es un icono chapuza inside
-			if($img.parent().attr('rel') != 'nofollow'){
+			if ($img.parent().attr('rel') !== 'nofollow'){
 				var className = 'hide-img-' + getRandom();
 
 				// Creo un botón para hacer toggle
@@ -76,7 +76,7 @@
 					$('.' + className).toggle();
 				});
 			}
-		});
+		}
 	}
 
 	/**

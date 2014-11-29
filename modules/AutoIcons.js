@@ -378,10 +378,11 @@
 	 * Ordena los iconos de la lista de más a usados a menos
 	 */
 	function sortIconsByMostUsed(icons) {
-		if (!_.isEmpty(mostUsedIcons)) {
-			return _.sortBy(icons, function (icon) {
-				var uses = mostUsedIcons[icon.name];
-				return uses ? uses * (-1) : 0;
+		if (Object.keys(mostUsedIcons).length !== 0) {
+			return icons.sort(function (a, b) {
+				var usesA = +mostUsedIcons[a.name] || 0;
+				var usesB = +mostUsedIcons[b.name] || 0;
+				return usesB - usesA;
 			});
 		}
 

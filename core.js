@@ -55,7 +55,7 @@ function getCurrentThread() {
  * @param {object} console - console object
  * @param {undefined} undefined - safe reference to undefined
  */
-(function ($, _, SHURSCRIPT, bootbox, console, undefined) {
+(function ($, SHURSCRIPT, bootbox, console, undefined) {
 	'use strict';
 
 	var core = {},
@@ -345,7 +345,7 @@ function getCurrentThread() {
 			type: 'GET',
 			url: SHURSCRIPT.config.server + 'config-' + SHURSCRIPT.scriptBranch
 		}).done(function (data) {
-			_.extend(SHURSCRIPT.config, data);
+			$.extend(SHURSCRIPT.config, data);
 
 			//lanza la carga de componentes y modulos
 			core.loadNextComponent();
@@ -385,14 +385,14 @@ function getCurrentThread() {
 		// TODO [ikaros45 28.03.2014]: No hay que comprobar si la funcion existe, sino definir una
 		// funcion dummy en el prototype que puede ser sobreescrita por los modulos
 
-		if (_.isFunction(component.loadAndCallback)) { // existe funcion de carga?
+		if (typeof component.loadAndCallback === 'function') { // existe funcion de carga?
 			core.helper.log("Cargando componente " + component.id);
 			component.loadAndCallback(core.loadNextComponent); //carga y una vez termines llama a loadNextComponent
 			return;
 		}
 
 		// TODO [ikaros45 28.03.2014]: lo mismo aqui... no hay que comprobar si existe!
-		if (_.isFunction(component.load)) {
+		if (typeof component.load === 'function') {
 			component.load(); // sin callback
 		}
 
@@ -419,4 +419,4 @@ function getCurrentThread() {
 		SHURSCRIPT.moduleManager.startEagerModules();
 	};
 
-})(jQuery, _, SHURSCRIPT, bootbox, console);
+})(jQuery, SHURSCRIPT, bootbox, console);
